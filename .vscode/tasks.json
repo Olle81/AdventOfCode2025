@@ -1,0 +1,101 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Cargo Build",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"build"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"options": {
+				"env": {
+					"PATH": "${env:PATH};${env:USERPROFILE}\\.cargo\\bin"
+				}
+			},
+			"problemMatcher": "$rustc"
+		},
+		{
+			"label": "Cargo Run",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"run"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"options": {
+				"env": {
+					"PATH": "${env:PATH};${env:USERPROFILE}\\.cargo\\bin"
+				}
+			},
+			"problemMatcher": "$rustc"
+		},
+		{
+			"label": "Cargo Test",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"test"
+			],
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"options": {
+				"env": {
+					"PATH": "${env:PATH};${env:USERPROFILE}\\.cargo\\bin"
+				}
+			},
+			"problemMatcher": "$rustc"
+		},
+		{
+			"label": "Cargo Check",
+			"type": "shell",
+			"command": "cargo",
+			"args": [
+				"check"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			},
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"options": {
+				"env": {
+					"PATH": "${env:PATH};${env:USERPROFILE}\\.cargo\\bin"
+				}
+			},
+			"problemMatcher": "$rustc"
+		}
+	]
+}
