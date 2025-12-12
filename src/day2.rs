@@ -1,8 +1,4 @@
-use std::{fs, result};
-
-// fn find_invalid_ids(first: i32, last: i32) -> Vec<i32> {
-
-// }
+use std::fs;
 
 #[derive(Debug)]
 struct Range {
@@ -140,13 +136,6 @@ pub fn solve() {
         .map(|range| get_invalid_codes_part_1(&range))
         .sum();
 
-    // let result_part_two: Vec<u64> = ranges
-    //     .iter()
-    //     .map(|range| get_invalid_codes(&range, 2))
-    //     .flatten()
-    //     .collect();
-
-    //let result_part_two = get_repeating_patterns(9, 3);
     let invalid_codes_part_2: Vec<u64> = get_invalid_codes_part_2(&ranges);
 
     println!("Result part 1: {:?}", result_part_one);
