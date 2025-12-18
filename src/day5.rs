@@ -2,8 +2,8 @@ use std::fs;
 
 #[derive(Debug, Clone)]
 struct Range {
-    start: i64,
-    end: i64,
+    start: u64,
+    end: u64,
 }
 
 fn combine(range1: &Range, range2: &Range) -> Option<Range> {
@@ -17,32 +17,26 @@ fn combine(range1: &Range, range2: &Range) -> Option<Range> {
     return Some(Range { start, end });
 }
 
-fn combine_all(ranges: &mut Vec<Range>) {
-    if ranges.iter().count() < 2 {
-        return;
-    }
+fn combine_all(sorted_ranges: &Vec<Range>) -> Vec<Range> {
+    let mut result = Vec::new();
 
-    let mut combination_found: Option<(Range, usize)> = None;
+    let mut current_range = sorted_ranges[0].clone();
 
-    for n in 0..ranges.iter().count() - 1 {
-        match combine(&ranges[n], &ranges[n + 1]) {
+    for range in sorted_ranges.iter().skip(1) {
+        match combine(&current_range, range) {
             Some(combined) => {
-                combination_found = Some((combined, n));
-                break;
+                current_range = combined;
             }
-            None => {}
+            None => {
+                result.push(current_range.clone());
+                current_range = range.clone();
+            }
         }
     }
 
-    match combination_found {
-        Some((combined_range, index)) => {
-            ranges.remove(index + 1);
-            ranges.remove(index);
-            ranges.insert(index, combined_range);
-            combine_all(ranges);
-        }
-        None => {}
-    }
+    result.push(current_range.clone());
+
+    result
 }
 
 pub fn solve() {
@@ -60,20 +54,23 @@ pub fn solve() {
         })
         .collect();
 
-    let values: Vec<i64> = lines
+    let values: Vec<u64> = lines
         .iter()
         .skip_while(|line| !line.is_empty())
         .skip(1)
         .map(|s| s.parse().unwrap())
         .collect();
 
-    combine_all(&mut ranges);
     ranges.sort_by(|a, b| a.start.cmp(&b.start));
+    let combined_ranges = combine_all(&ranges);
 
-    let result: usize = values
+    let result_part_1: usize = values
         .into_iter()
-        .filter(|v| ranges.iter().any(|r| r.start <= *v && r.end >= *v))
+        .filter(|v| combined_ranges.iter().any(|r| r.start <= *v && r.end >= *v))
         .count();
 
-    println!("Result: {}", result);
+    let result_part_2: u64 = combined_ranges.iter().map(|r| r.end - r.start + 1).sum();
+
+    println!("Result part 1: {}", result_part_1);
+    println!("Result part 2: {:?}", result_part_2);
 }
