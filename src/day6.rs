@@ -6,21 +6,17 @@ struct Operation {
     initial_value: i64,
 }
 
-fn compute(numbers: &Vec<Vec<i64>>, operations: &Vec<Operation>) -> Vec<i64> {
-    let mut result: Vec<i64> = Vec::new();
-
-    for col in 0..numbers[0].len() {
-        let operation = &operations[col];
-        let mut acc = operation.initial_value;
-
-        for row in 0..numbers.len() {
-            acc = (operation.func)(acc, numbers[row][col]);
-        }
-
-        result.push(acc);
-    }
-
-    result
+fn compute(numbers: &[Vec<i64>], operations: &[Operation]) -> Vec<i64> {
+    operations
+        .iter()
+        .enumerate()
+        .map(|(col, operation)| {
+            numbers
+                .iter()
+                .map(|row| row[col])
+                .fold(operation.initial_value, operation.func)
+        })
+        .collect()
 }
 
 pub fn solve() {
