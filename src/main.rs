@@ -6,6 +6,7 @@ mod day4;
 mod day5;
 mod day6;
 mod day7;
+mod day8;
 
 fn main() {
     let days = vec![
@@ -16,6 +17,7 @@ fn main() {
         day5::solve,
         day6::solve,
         day7::solve,
+        day8::solve,
     ];
     let args: Vec<String> = env::args().collect();
     let day = days[args[1].parse::<usize>().unwrap() - 1];
